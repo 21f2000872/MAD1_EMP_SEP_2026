@@ -1,0 +1,11 @@
+{% extends 'base.html' %}{% block title %}Search Records{% endblock %}{% block content %}
+<div class="eyebrow">Administrator</div><h1 class="page-title">Search records</h1><p class="lead-text">Search students, examiners, examinations and bookings by name, email or ID.</p>
+<form method="get" class="panel mb-4"><div class="panel-body d-flex gap-2"><input class="form-control" type="search" name="q" placeholder="Name, email, examination or ID" value="{{ q }}" aria-label="Search records"><button class="btn btn-utc">Search</button></div></form>
+{% if q %}
+{% for heading,rows in [('Students',students),('Examiners',examiners),('Examinations',exams),('Bookings',bookings)] %}
+<div class="panel mb-3"><div class="panel-header"><h2 class="section-title mb-0">{{ heading }} <span class="chip">{{ rows|length }}</span></h2></div><div class="panel-body">
+{% if rows %}<div class="table-responsive"><table class="table"><thead><tr><th>ID</th><th>Name / Details</th><th>Status</th></tr></thead><tbody>{% for r in rows %}
+<tr><td>#{{ r.id }}</td><td>{% if heading in ['Students','Examiners'] %}{{ r.name }} · {{ r.email }}{% elif heading=='Examinations' %}{{ r.name }} · {{ r.exam_type }}{% else %}{{ r.student_name }} · {{ r.exam_name }}{% endif %}</td><td>{{ r.status if heading in ['Examinations','Bookings'] else ('Active' if r.active else 'Inactive') }}</td></tr>
+{% endfor %}</tbody></table></div>{% else %}<div class="muted">No matching records.</div>{% endif %}</div></div>
+{% endfor %}
+{% endif %}{% endblock %}

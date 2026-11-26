@@ -1,0 +1,13 @@
+<div class="row g-3">
+ <div class="col-md-6"><label class="form-label">Course</label><select name="course_id" class="form-select" required><option value="">Choose course</option>{% for c in courses %}<option value="{{ c.id }}" {% if exam is defined and exam.course_id==c.id %}selected{% endif %}>{{ c.code }} · {{ c.name }}</option>{% endfor %}</select></div>
+ <div class="col-md-6"><label class="form-label">Examination name</label><input name="name" class="form-control" value="{{ exam.name if exam is defined else '' }}" placeholder="Chapter 1 Viva / Unit Test" required></div>
+ <div class="col-md-3"><label class="form-label">Type</label><select name="exam_type" class="form-select">{% for t in exam_types %}<option {% if exam is defined and exam.exam_type==t %}selected{% endif %}>{{ t }}</option>{% endfor %}</select></div>
+ <div class="col-md-3"><label class="form-label">Duration (minutes)</label><input type="number" min="1" class="form-control" name="duration_minutes" value="{{ exam.duration_minutes if exam is defined else 30 }}" required></div>
+ <div class="col-md-3"><label class="form-label">Maximum marks</label><input type="number" min="0.1" step="0.1" class="form-control" name="max_marks" value="{{ exam.max_marks if exam is defined else 30 }}" required></div>
+ <div class="col-md-3"><label class="form-label">Status</label><select name="status" class="form-select">{% for s in statuses %}<option {% if exam is defined and exam.status==s or exam is not defined and s=='Draft' %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></div>
+ <div class="col-md-6"><label class="form-label">Slot creation start</label><input type="datetime-local" name="slot_creation_start" class="form-control" value="{{ exam.slot_creation_start if exam is defined else default_start }}" required></div>
+ <div class="col-md-6"><label class="form-label">Slot creation end</label><input type="datetime-local" name="slot_creation_end" class="form-control" value="{{ exam.slot_creation_end if exam is defined else default_end }}" required></div>
+ <div class="col-md-6"><label class="form-label">Student booking start</label><input type="datetime-local" name="booking_start" class="form-control" value="{{ exam.booking_start if exam is defined else default_start }}" required></div>
+ <div class="col-md-6"><label class="form-label">Student booking end / cancellation deadline</label><input type="datetime-local" name="booking_end" class="form-control" value="{{ exam.booking_end if exam is defined else default_end }}" required></div>
+ <div class="col-12 form-hint">The current exam status and the configured dates must both permit slot creation or student booking. For demos, configure windows around the present time and switch status when ready.</div>
+</div>

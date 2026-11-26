@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block title %}All Bookings{% endblock %}{% block content %}
+<div class="eyebrow">Administrator</div><h1 class="page-title">All bookings</h1><p class="lead-text">Keep a complete audit trail of examination bookings and reschedule active bookings if required.</p>
+<div class="panel"><div class="panel-body">
+{% if bookings %}<div class="table-responsive"><table class="table"><thead><tr><th>Booking ID</th><th>Student</th><th>Examination</th><th>Slot</th><th>Examiner</th><th>Status</th><th>Action</th></tr></thead><tbody>
+{% for b in bookings %}<tr><td>#{{ b.id }}</td><td>{{ b.student_name }}<div class="muted small">{{ b.student_email }}</div></td><td><strong>{{ b.exam_name }}</strong><div class="small muted">{{ b.course_name }}</div></td><td>{{ b.slot_date }}<div class="small muted">{{ b.start_time }}–{{ b.end_time }}</div></td><td>{{ b.examiner_name }}</td><td><span class="chip chip-{{ b.status|lower }}">{{ b.status }}</span></td><td>{% if b.status=='Booked' %}<a href="{{ url_for('admin_reschedule',booking_id=b.id) }}" class="btn btn-outline-utc small-action">Reschedule</a>{% else %}—{% endif %}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty">No student bookings yet.</div>{% endif %}
+</div></div>{% endblock %}

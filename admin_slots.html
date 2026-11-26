@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block title %}All Examination Slots{% endblock %}{% block content %}
+<div class="eyebrow">Administrator</div><h1 class="page-title">All examination slots</h1><p class="lead-text">Review dates, capacity and allocated examiners; change examiner when necessary.</p>
+<div class="panel"><div class="panel-body">
+{% if slots %}<div class="table-responsive"><table class="table"><thead><tr><th>ID</th><th>Exam</th><th>Date / Time</th><th>Examiner</th><th>Occupied / Capacity</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+{% for s in slots %}<tr><td>#{{ s.id }}</td><td><strong>{{ s.exam_name }}</strong><div class="small muted">{{ s.course_name }}</div></td><td>{{ s.slot_date }}<div class="small muted">{{ s.start_time }}–{{ s.end_time }}</div></td><td>{{ s.examiner_name }}</td><td>{{ s.booked_count }} / {{ s.capacity }}</td><td><span class="chip chip-{{ s.status|lower }}">{{ s.status }}</span></td><td><a class="btn btn-outline-utc small-action" href="{{ url_for('admin_reassign',slot_id=s.id) }}">Change examiner</a></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty">No examination slots yet. Assign examiners and ask them to create slots.</div>{% endif %}
+</div></div>{% endblock %}

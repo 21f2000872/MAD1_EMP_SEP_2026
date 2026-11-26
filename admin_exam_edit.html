@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block title %}Edit Examination{% endblock %}{% block content %}
+<a href="{{ url_for('admin_exams') }}">← All examinations</a><h1 class="page-title mt-3 mb-4">Edit {{ exam.name }}</h1>
+<div class="panel"><div class="panel-body"><form method="post"><input type="hidden" name="_csrf_token" value="{{ csrf_token }}">{% include '_exam_fields.html' %}<button class="btn btn-utc mt-4">Save examination</button></form></div></div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Examiner Dashboard{% endblock %}
+{% block content %}
+<div class="eyebrow">Examiner workspace</div>
+<h1 class="page-title">Examiner Dashboard</h1>
+<p class="lead-text">Three steps: see your exam, make an available slot, and evaluate your booked students.</p>
+<div class="row g-3 mb-4">
+ <div class="col-sm-4"><div class="stat"><div class="stat-number">{{ exams|length }}</div><div class="stat-label">Assigned examinations</div></div></div>
+ <div class="col-sm-4"><div class="stat"><div class="stat-number">{{ slots|length }}</div><div class="stat-label">Recent slots</div></div></div>
+ <div class="col-sm-4"><div class="stat"><div class="stat-number">{{ pending }}</div><div class="stat-label">Pending evaluations</div></div></div>
+</div>
+<div class="row g-3 mb-4">
+ <div class="col-md-4"><div class="step-card"><div class="step-number">Step 1</div><h3>Assigned exams</h3><p>View only examinations assigned by Admin.</p><a href="{{ url_for('examiner_exams') }}">My Exams</a></div></div>
+ <div class="col-md-4"><div class="step-card"><div class="step-number">Step 2</div><h3>Create slots</h3><p>Create exam slots during the allowed slot-creation period.</p><a href="{{ url_for('examiner_slots') }}">Manage Slots</a></div></div>
+ <div class="col-md-4"><div class="step-card"><div class="step-number">Step 3</div><h3>Mark students</h3><p>Open your slot, view registered students, enter rubric marks and remarks.</p><a href="{{ url_for('examiner_slots') }}">View Participants</a></div></div>
+</div>
+<div class="panel"><div class="panel-header"><h2 class="section-title">My assigned examinations</h2></div><div class="panel-body">
+ {% if exams %}<div class="table-responsive"><table class="table"><thead><tr><th>Exam</th><th>Course</th><th>Type</th><th>Status</th></tr></thead><tbody>
+ {% for e in exams %}<tr><td>{{ e.name }}</td><td>{{ e.course_name }}</td><td>{{ e.exam_type }}</td><td>{{ e.status }}</td></tr>{% endfor %}</tbody></table></div>
+ {% else %}<p class="muted">No examination has been assigned yet.</p>{% endif %}
+</div></div>
+<div class="panel"><div class="panel-header"><h2 class="section-title">My recent slots</h2></div><div class="panel-body">
+{% if slots %}<div class="table-responsive"><table class="table"><thead><tr><th>Exam</th><th>Date / Time</th><th>Booked</th><th>Action</th></tr></thead><tbody>
+{% for s in slots %}<tr><td>{{ s.exam_name }}</td><td>{{ s.slot_date }} {{ s.start_time }}</td><td>{{ s.booked_count }} / {{ s.capacity }}</td><td><a href="{{ url_for('examiner_participants',slot_id=s.id) }}">View participants</a></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="muted">No slots created yet.</p>{% endif %}
+</div></div>
+{% endblock %}

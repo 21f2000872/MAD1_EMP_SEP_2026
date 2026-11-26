@@ -1,0 +1,12 @@
+{% extends 'base.html' %}{% block title %}Edit Course{% endblock %}{% block content %}
+<a href="{{ url_for('admin_courses') }}">← Back to courses</a><h1 class="page-title mt-3">Edit course {{ course.code }}</h1>
+<div class="panel"><div class="panel-body"><form method="post" class="row g-3"><input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+<div class="col-md-3"><label class="form-label">Code</label><input name="code" class="form-control" value="{{ course.code }}" required></div>
+<div class="col-md-9"><label class="form-label">Name</label><input name="name" class="form-control" value="{{ course.name }}" required></div>
+<div class="col-md-4"><label class="form-label">Class</label><input name="class_level" class="form-control" value="{{ course.class_level }}"></div>
+<div class="col-md-4"><label class="form-label">Subject</label><input name="subject" class="form-control" value="{{ course.subject }}"></div>
+<div class="col-md-4"><label class="form-label">Board</label><input name="board" class="form-control" value="{{ course.board }}"></div>
+<div class="col-md-9"><label class="form-label">Description</label><input name="description" class="form-control" value="{{ course.description }}"></div>
+<div class="col-md-3"><label class="form-label">Status</label><select name="status" class="form-select"><option {% if course.status=='Active' %}selected{% endif %}>Active</option><option {% if course.status=='Inactive' %}selected{% endif %}>Inactive</option></select></div>
+<div class="col-12"><button class="btn btn-utc">Save changes</button></div></form></div></div>
+{% endblock %}

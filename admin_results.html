@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block title %}Results Publication{% endblock %}{% block content %}
+<div class="eyebrow">Administrator</div><h1 class="page-title">Result publication</h1><p class="lead-text">Students can see marks and examiner remarks only after publication. All non-cancelled bookings must be evaluated.</p>
+<div class="panel"><div class="panel-body">
+{% if exams %}<div class="table-responsive"><table class="table"><thead><tr><th>Examination</th><th>Course</th><th>Rubrics</th><th>Evaluated / Active bookings</th><th>Visibility</th><th>Action</th></tr></thead><tbody>
+{% for e in exams %}<tr><td><strong>{{ e.name }}</strong></td><td>{{ e.course_name }}</td><td>{{ e.rubric_count }}</td><td>{{ e.completed_bookings }} / {{ e.active_bookings }}</td><td>{% if e.results_published %}<span class="chip chip-active">Published</span>{% else %}<span class="chip chip-pending">Hidden</span>{% endif %}</td><td><form method="post" action="{{ url_for('admin_publish',exam_id=e.id) }}"><input type="hidden" name="_csrf_token" value="{{ csrf_token }}"><input type="hidden" name="publish" value="{{ 0 if e.results_published else 1 }}"><button class="btn {{ 'btn-outline-secondary' if e.results_published else 'btn-utc' }} small-action">{{ 'Unpublish' if e.results_published else 'Publish results' }}</button></form></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty">No examinations yet.</div>{% endif %}
+</div></div>{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="eyebrow">Admin</div>
+<h1 class="page-title">Admin Dashboard</h1>
+<p class="lead-text">Follow the numbered steps below to conduct an examination from start to finish.</p>
+<div class="row g-2 mb-4">
+  {% for label,key in [('Courses','courses'),('Examinations','exams'),('Examiners','examiners'),('Students','students'),('Slots','slots'),('Bookings','bookings')] %}
+  <div class="col-6 col-md-2"><div class="stat"><div class="stat-number">{{ stats[key] }}</div><div class="stat-label">{{ label }}</div></div></div>
+  {% endfor %}
+</div>
+{% if stats.pending %}
+  <div class="alert alert-warning">{{ stats.pending }} examiner(s) are waiting for approval. <a href="{{ url_for('admin_examiners') }}">Review examiners</a>.</div>
+{% endif %}
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="step-card"><div class="step-number">Step 1</div><h3>Set up courses</h3><p>Create a course such as Class 12 Physics.</p><a href="{{ url_for('admin_courses') }}">Manage Courses</a></div></div>
+  <div class="col-md-4"><div class="step-card"><div class="step-number">Step 2</div><h3>Create examination</h3><p>Set dates, maximum marks, rubrics, and assign examiners.</p><a href="{{ url_for('admin_exams') }}">Manage Exams</a></div></div>
+  <div class="col-md-4"><div class="step-card"><div class="step-number">Step 3</div><h3>Approve examiner</h3><p>Approve registered examiners before they can create slots.</p><a href="{{ url_for('admin_examiners') }}">Manage Examiners</a></div></div>
+  <div class="col-md-4"><div class="step-card"><div class="step-number">Step 4</div><h3>Open slot creation</h3><p>Set exam status to Slot Creation within the configured date window.</p><a href="{{ url_for('admin_exams') }}">Open Creation</a></div></div>
+  <div class="col-md-4"><div class="step-card"><div class="step-number">Step 5</div><h3>Open booking</h3><p>After slots exist, change exam status to Booking Open.</p><a href="{{ url_for('admin_bookings') }}">View Bookings</a></div></div>
+  <div class="col-md-4"><div class="step-card"><div class="step-number">Step 6</div><h3>Publish results</h3><p>After marking is completed, publish the results for students.</p><a href="{{ url_for('admin_results') }}">Manage Results</a></div></div>
+</div>
+<div class="panel"><div class="panel-header"><h2 class="section-title">Recent Bookings</h2></div><div class="panel-body">
+{% if recent %}
+<div class="table-responsive"><table class="table"><thead><tr><th>Student</th><th>Exam</th><th>Slot</th><th>Status</th></tr></thead><tbody>
+{% for b in recent %}<tr><td>{{ b.student_name }}</td><td>{{ b.exam_name }}</td><td>{{ b.slot_date }} {{ b.start_time }}</td><td>{{ b.status }}</td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<p class="muted">No bookings have been made.</p>{% endif %}
+</div></div>
+{% endblock %}

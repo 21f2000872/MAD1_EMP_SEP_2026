@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="eyebrow">Student workspace</div>
+<h1 class="page-title">Student Dashboard</h1>
+<p class="lead-text">Find an examination, book an available time, and view your exam history and results.</p>
+<div class="row g-3 mb-4">
+ <div class="col-sm-4"><div class="stat"><div class="stat-number">{{ exams|length }}</div><div class="stat-label">Recently open exams</div></div></div>
+ <div class="col-sm-4"><div class="stat"><div class="stat-number">{{ bookings|length }}</div><div class="stat-label">Recent bookings</div></div></div>
+ <div class="col-sm-4"><div class="stat"><div class="stat-number">{{ results }}</div><div class="stat-label">Published results</div></div></div>
+</div>
+<div class="row g-3 mb-4">
+ <div class="col-md-4"><div class="step-card"><div class="step-number">Step 1</div><h3>Find an exam</h3><p>Browse and search examinations.</p><a href="{{ url_for('student_exams') }}">Browse Exams</a></div></div>
+ <div class="col-md-4"><div class="step-card"><div class="step-number">Step 2</div><h3>Book a slot</h3><p>Choose a time before booking closes. Cancel if required before the deadline.</p><a href="{{ url_for('student_bookings') }}">My Bookings</a></div></div>
+ <div class="col-md-4"><div class="step-card"><div class="step-number">Step 3</div><h3>See results</h3><p>View marks and feedback after Admin publishes results.</p><a href="{{ url_for('student_results') }}">My Results</a></div></div>
+</div>
+<div class="panel"><div class="panel-header"><h2 class="section-title">Examinations accepting bookings</h2></div><div class="panel-body">
+{% if exams %}<div class="table-responsive"><table class="table"><thead><tr><th>Examination</th><th>Course</th><th>Action</th></tr></thead><tbody>
+{% for e in exams %}<tr><td>{{ e.name }}</td><td>{{ e.course_name }} · {{ e.exam_type }}</td><td><a href="{{ url_for('student_exam_detail',exam_id=e.id) }}">View slots</a></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="muted">No exams are open for booking right now.</p>{% endif %}
+</div></div>
+<div class="panel"><div class="panel-header"><h2 class="section-title">Recent booking history</h2></div><div class="panel-body">
+{% if bookings %}<div class="table-responsive"><table class="table"><thead><tr><th>Examination</th><th>Slot</th><th>Status</th></tr></thead><tbody>
+{% for b in bookings %}<tr><td>{{ b.exam_name }}</td><td>{{ b.slot_date }} {{ b.start_time }}</td><td>{{ b.status }}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="muted">You haven't booked a slot yet.</p>{% endif %}
+</div></div>
+{% endblock %}

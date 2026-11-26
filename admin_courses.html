@@ -1,0 +1,17 @@
+{% extends 'base.html' %}{% block title %}Manage Courses{% endblock %}{% block content %}
+<div class="eyebrow">Administration</div><h1 class="page-title">Courses</h1><p class="lead-text">Create subjects and class-based courses for UTC examinations.</p>
+<details class="panel mb-4" open><summary class="panel-header fw-bold">Add a new course</summary><div class="panel-body">
+<form method="post" class="row g-3"><input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+<div class="col-md-3"><label class="form-label">Course code</label><input class="form-control" name="code" placeholder="PHY12" required></div>
+<div class="col-md-5"><label class="form-label">Course name</label><input class="form-control" name="name" placeholder="Class 12 Physics" required></div>
+<div class="col-md-4"><label class="form-label">Subject</label><input class="form-control" name="subject" placeholder="Physics"></div>
+<div class="col-md-3"><label class="form-label">Class</label><input class="form-control" name="class_level" placeholder="12"></div>
+<div class="col-md-3"><label class="form-label">Board</label><select class="form-select" name="board"><option value="">Select board</option><option>CBSE</option><option>GSEB</option><option>Competitive</option></select></div>
+<div class="col-md-6"><label class="form-label">Description</label><input class="form-control" name="description" placeholder="Term 1 / full syllabus"></div>
+<div class="col-12"><button class="btn btn-utc">Create course</button></div></form>
+</div></details>
+<div class="panel"><div class="panel-header"><h2 class="section-title mb-0">All courses</h2></div><div class="panel-body">
+{% if courses %}<div class="table-responsive"><table class="table"><thead><tr><th>ID</th><th>Code</th><th>Name</th><th>Class / Board</th><th>Exams</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+{% for c in courses %}<tr><td>{{ c.id }}</td><td><strong>{{ c.code }}</strong></td><td>{{ c.name }}<div class="muted small">{{ c.subject }}</div></td><td>{{ c.class_level }} {{ c.board }}</td><td>{{ c.exam_count }}</td><td><span class="chip chip-{{ c.status|lower }}">{{ c.status }}</span></td><td><div class="d-flex gap-1 flex-wrap"><a class="btn btn-outline-secondary small-action" href="{{ url_for('admin_course_edit',course_id=c.id) }}">Edit</a><form method="post" action="{{ url_for('admin_course_delete',course_id=c.id) }}"><input type="hidden" name="_csrf_token" value="{{ csrf_token }}"><button class="btn btn-outline-danger small-action">Remove</button></form></div></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty">No courses yet.</div>{% endif %}
+</div></div>{% endblock %}

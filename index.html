@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="hero mb-4">
+  <div class="tag mb-2">Uttar Tuition Classes</div>
+  <h1>Examination Management Portal</h1>
+  <p class="intro">A single place for courses, examinations, examiner schedules, student bookings and results.</p>
+  <a href="{{ url_for('login') }}" class="btn btn-utc">Log in</a>
+  <a href="{{ url_for('register') }}" class="btn btn-outline-utc">Register</a>
+</div>
+<div class="row g-3 mb-3">
+  <div class="col-md-4"><div class="card-feature"><h3>Admin</h3><p class="muted">Create courses/examinations, approve examiners, manage bookings and publish marks.</p></div></div>
+  <div class="col-md-4"><div class="card-feature"><h3>Examiner</h3><p class="muted">Manage assigned examination slots and evaluate booked students.</p></div></div>
+  <div class="col-md-4"><div class="card-feature"><h3>Student</h3><p class="muted">Search exams, book a time, track booking history and check published results.</p></div></div>
+</div>
+<div class="panel"><div class="panel-body">Currently managed: <strong>{{ data.courses }}</strong> courses · <strong>{{ data.exams }}</strong> examinations · <strong>{{ data.students }}</strong> registered students</div></div>
+{% endblock %}

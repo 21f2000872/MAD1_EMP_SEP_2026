@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="auth-card panel"><div class="panel-body">
+  <div class="eyebrow mb-2">Join UTC ExamOps</div><h1 class="page-title mb-2">Create your account</h1>
+  <p class="muted">Students can start immediately. Examiner accounts require administrative approval.</p>
+  <form method="post" action="{{ url_for('register') }}">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+    <div class="row g-3">
+      <div class="col-12"><label class="form-label">Full name</label><input name="name" class="form-control" required maxlength="100"></div>
+      <div class="col-12"><label class="form-label">Email address</label><input type="email" name="email" class="form-control" required autocomplete="email"></div>
+      <div class="col-12"><label class="form-label">Password (8+ characters)</label><input type="password" name="password" class="form-control" minlength="8" required autocomplete="new-password"></div>
+      <div class="col-md-6"><label class="form-label">Your role</label><select class="form-select" name="role"><option value="student">Student</option><option value="examiner">Examiner / Teacher</option></select></div>
+      <div class="col-md-6"><label class="form-label">Phone</label><input name="phone" class="form-control"></div>
+      <div class="col-md-6"><label class="form-label">Class (student)</label><input name="class_name" placeholder="e.g. Class 12 Science" class="form-control"></div>
+      <div class="col-md-6"><label class="form-label">Batch (student)</label><input name="batch" placeholder="e.g. UTC Bhayli" class="form-control"></div>
+      <div class="col-12"><label class="form-label">Department (examiner)</label><input name="department" placeholder="e.g. Physics" class="form-control"></div>
+    </div>
+    <button class="btn btn-utc w-100 mt-4" type="submit">Create account</button>
+  </form>
+  <p class="mt-4 mb-0 small muted">Already registered? <a href="{{ url_for('login') }}">Sign in</a></p>
+</div></div>
+{% endblock %}

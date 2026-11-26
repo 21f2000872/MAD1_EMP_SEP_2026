@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Error {{ code }}{% endblock %}
+{% block content %}
+<div class="auth-card panel"><div class="panel-body text-center py-5">
+  <div class="eyebrow mb-2">Request error</div>
+  <div class="display-2 fw-bold">{{ code }}</div><h1 class="page-title">This page is unavailable</h1>
+  <p class="muted">{{ message }}</p>
+  <a class="btn btn-utc" href="{{ url_for('index') }}">Return home</a>
+</div></div>
+{% endblock %}

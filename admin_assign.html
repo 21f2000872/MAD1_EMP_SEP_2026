@@ -1,0 +1,5 @@
+{% extends 'base.html' %}{% block title %}Assign Examiners{% endblock %}{% block content %}
+<a href="{{ url_for('admin_exams') }}">← All examinations</a><div class="eyebrow mt-3">Examiner assignment</div><h1 class="page-title">{{ exam.name }}</h1><p class="lead-text">Choose approved, active examiners. Examiners who already own slots cannot be unassigned until their slots are reassigned.</p>
+<div class="panel"><div class="panel-body"><form method="post"><input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+{% for u in examiners %}<label class="checkbox-card"><input class="form-check-input" type="checkbox" name="examiners" value="{{ u.id }}" {% if u.id in selected %}checked{% endif %}><span><strong>{{ u.name }}</strong><small class="muted d-block">{{ u.department }} · {{ u.email }}</small></span></label>{% else %}<div class="empty">No approved examiners are available. Approve an examiner from the Examiners page first.</div>{% endfor %}
+<button class="btn btn-utc mt-3">Save assignments</button></form></div></div>{% endblock %}

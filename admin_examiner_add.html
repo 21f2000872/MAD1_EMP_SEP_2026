@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Add Examiner{% endblock %}
+{% block content %}
+<h1 class="page-title">Add Examiner</h1>
+<p class="lead-text">Admin can create and approve examiner accounts directly. Examiners may also self-register and request approval.</p>
+<div class="panel"><div class="panel-body">
+<form method="post" class="row g-3">
+<input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+<div class="col-md-6"><label class="form-label">Name</label><input class="form-control" name="name" required></div>
+<div class="col-md-6"><label class="form-label">Email</label><input type="email" class="form-control" name="email" required></div>
+<div class="col-md-6"><label class="form-label">Initial password (at least 8 characters)</label><input type="password" class="form-control" name="password" minlength="8" required></div>
+<div class="col-md-6"><label class="form-label">Phone</label><input class="form-control" name="phone"></div>
+<div class="col-md-6"><label class="form-label">Department</label><input class="form-control" name="department" placeholder="Physics / Chemistry / Maths"></div>
+<div class="col-12"><button class="btn btn-utc">Create approved examiner</button> <a href="{{ url_for('admin_examiners') }}" class="btn btn-outline-secondary">Cancel</a></div>
+</form></div></div>
+{% endblock %}

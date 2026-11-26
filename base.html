@@ -1,9 +1,66 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Examination Management Portal </title>
-  </head>
-  <body>
-    
-  </body>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Examination Portal{% endblock %} | Uttar Tuition Classes</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="site-header">
+  <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
+    <a class="site-brand" href="{{ url_for('index') }}">UTC <span>Examination Portal</span></a>
+    <div class="d-flex align-items-center gap-3">
+      {% if current_user %}
+        <small class="header-user">{{ current_user.name }} ({{ current_user.role|capitalize }})</small>
+        <form method="post" action="{{ url_for('logout') }}" class="m-0">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+          <button class="btn btn-outline-light btn-sm" type="submit">Log out</button>
+        </form>
+      {% else %}
+        <a class="btn btn-outline-light btn-sm" href="{{ url_for('login') }}">Log in</a>
+        <a class="btn btn-light btn-sm" href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+{% if current_user %}
+<nav class="section-nav" aria-label="Main navigation">
+ <div class="container d-flex flex-wrap gap-2 py-2">
+  {% if current_user.role == 'admin' %}
+    <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('admin_courses') }}">1. Courses</a>
+    <a href="{{ url_for('admin_exams') }}">2. Examinations</a>
+    <a href="{{ url_for('admin_examiners') }}">3. Examiners</a>
+    <a href="{{ url_for('admin_students') }}">Students</a>
+    <a href="{{ url_for('admin_slots') }}">4. Slots</a>
+    <a href="{{ url_for('admin_bookings') }}">5. Bookings</a>
+    <a href="{{ url_for('admin_results') }}">6. Results</a>
+    <a href="{{ url_for('admin_search') }}">Search</a>
+  {% elif current_user.role == 'examiner' %}
+    <a href="{{ url_for('examiner_dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('examiner_exams') }}">1. Assigned exams</a>
+    <a href="{{ url_for('examiner_slots') }}">2. Manage slots</a>
+    <a href="{{ url_for('examiner_slots') }}">3. Participants &amp; marking</a>
+  {% else %}
+    <a href="{{ url_for('student_dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('student_exams') }}">1. Find examination</a>
+    <a href="{{ url_for('student_bookings') }}">2. My bookings</a>
+    <a href="{{ url_for('student_results') }}">3. Results</a>
+    <a href="{{ url_for('student_profile') }}">Profile</a>
+  {% endif %}
+ </div>
+</nav>
+{% endif %}
+<main class="container main-content py-4">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}" role="status">{{ message }}</div>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer"><div class="container">Uttar Tuition Classes · Examination Management Portal · Flask / SQLite / Jinja2</div></footer>
+</body>
 </html>
