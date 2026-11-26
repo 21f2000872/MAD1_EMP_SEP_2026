@@ -8,3 +8,10 @@
   <a class="btn btn-utc" href="{{ url_for('index') }}">Return home</a>
 </div></div>
 {% endblock %}
+
+
+<ul>
+  {%for exam in exams%}
+   <li>{{exams}}</li>
+  {%endfor%}
+</ul>
