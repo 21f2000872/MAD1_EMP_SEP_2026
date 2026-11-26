@@ -1,2 +1,7 @@
 <! DOCTYPE html>
 <html>
+<h1>Examination Management Portal</h1>
+<body>
+welcom {{name}} to Examination management portal of UTC.
+</body>
+
