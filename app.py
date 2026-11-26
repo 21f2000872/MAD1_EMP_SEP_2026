@@ -6,3 +6,6 @@ from Flask import Flask
 def index():
     data = dict(courses=one('SELECT COUNT(*) AS n FROM courses')['n'],exams=one('SELECT COUNT(*) AS n FROM examinations')['n'],students=one('SELECT COUNT(*) AS n FROM users WHERE role= "student')['n'])
   return render_template('index.html', data=data)
+@app.route('/about')
+def about():
+    
