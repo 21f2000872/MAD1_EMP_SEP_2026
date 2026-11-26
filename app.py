@@ -1,5 +1,5 @@
 from Flask import Flask
-
+app = Flask(__name__)
 
 
 @app.route('/')
@@ -8,4 +8,4 @@ def index():
   return render_template('index.html', data=data)
 @app.route('/about')
 def about():
-    
+    return("This Examination management portal allows us to create and manage examination courses")
