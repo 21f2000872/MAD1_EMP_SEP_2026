@@ -9,3 +9,8 @@ def index():
 @app.route('/about')
 def about():
     return("This Examination management portal allows us to create and manage examination courses")
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
